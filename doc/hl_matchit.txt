@@ -1,0 +1,118 @@
+" vim:set fen fdm=marker:
+*hl_matchit.txt*  Vim plugin to highlight matchit.vim.
+
+Version: 0.1.0
+Author : vimtaku <vimtaku@gmail.com>
+License :
+{{{
+This is free and unencumbered software released into the public domain.
+
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
+
+In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+For more information, please refer to <http://unlicense.org/>
+}}}
+
+==============================================================================
+INTRODUCTION			|hl_matchit-introduction|
+BACKGROUND			|hl_matchit-background|
+INTERFACE		|hl_matchit-interface|
+  Commands		  |hl_matchit-commands|
+  Variables		  |hl_matchit-variables|
+CHANGELOG			|hl_matchit-changelog|
+
+==============================================================================
+INTRODUCTION					*hl_matchit-introduction*
+
+*hl_matchit* is a Vim plugin to highlight matchit.vim.
+Maybe you have to load matchit.vim plugin than this plugin is loaded.
+
+You can set
+let g:hl_matchit_enable_on_vim_startup = 1
+"let g:hl_matchit_hl_groupname = 'your favorite highlight groupname'
+
+on your vimrc.
+If this variable is set, augroup is defined, and start highlighting.
+
+==============================================================================
+BACKGROUND					*hl_matchit-background*
+
+I always used matchit.vim. It's quite cool plugin.
+When I use it, I noticed I wanna highlight match.
+Therefore, I googled by words [vim matchit highlight].
+Then, I noticed that many people had same problem,
+and I also found this article as follows.
+http://objectmix.com/editors/377087-matchit-plugin-highlighting.html
+
+This article resolved my problem because there is .vimrc snippet.
+But it's just snippet, I thougt I wanna use as vim plugin.
+
+So, I improved a little that snippet and created this vim plugin.
+
+AS LICENSE:
+ I copied and improved from
+ http://objectmix.com/editors/377087-matchit-plugin-highlighting.html#post1403424
+ there are copyright on the page of bottom
+ but I think this snippet's author is Antony.
+ I have no method to contanct Antony,
+  so I decided to use unlicense.
+ I have to say, Thanks Antony!
+
+==============================================================================
+INTERFACE					*hl_matchit-interface*
+
+COMMAND					*hl_matchit-command*
+
+						*:HiMatch*
+:HiMatch
+	do highlight match once.
+
+						*:HiMatchOn*
+:HiMatchOn
+	Switch on do highlight matchit autocomand.
+
+						*:HiMatchOff*
+:HiMatchOff
+	Switch off do highlight matchit autocomand.
+
+VARIABLES					*hl_matchit-variables*
+
+						*:g:loaded_hl_matchit*
+loaded variable.
+
+						*:g:hl_matchit_enable_on_vim_startup*
+If this variable is set, augroup is defined, and start highlighting.
+example)
+let g:hl_matchit_enable_on_vim_startup = 1
+
+						*:g:hl_matchit_hl_groupname*
+you can set higlight group name.
+example)
+let g:hl_matchit_hl_groupname = 'Title'
+
+==============================================================================
+CHANGELOG					*hl_matchit-changelog*
+
+0.1.0	2012-12-23
+	- Initial version.
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
