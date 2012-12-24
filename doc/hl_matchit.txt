@@ -45,12 +45,22 @@ INTRODUCTION					*hl_matchit-introduction*
 *hl_matchit* is a Vim plugin to highlight matchit.vim.
 Maybe you have to load matchit.vim plugin than this plugin is loaded.
 
-You can set
-let g:hl_matchit_enable_on_vim_startup = 1
-"let g:hl_matchit_hl_groupname = 'your favorite highlight groupname'
 
-on your vimrc.
-If this variable is set, augroup is defined, and start highlighting.
+here is vimrc examples.
+
+"" If this variable is set, augroup is defined, and start highlighting.
+let g:hl_matchit_enable_on_vim_startup = 1
+
+"" you can specify highlight group. see :highlight
+let g:hl_matchit_hl_groupname = 'Search'
+
+"" I recomend  g:hl_matchit_speed_level = 1 because highlight is just an
+"" addition.
+"" If 1 is set, sometimes do not highlight.
+let g:hl_matchit_speed_level = 1 " or 2
+
+"" you can specify use hl_matchit filetype.
+let g:hl_matchit_allow_ft_regexp = 'html\|vim\|sh' " blah..blah..
 
 ==============================================================================
 BACKGROUND					*hl_matchit-background*
@@ -107,6 +117,17 @@ let g:hl_matchit_enable_on_vim_startup = 1
 you can set higlight group name.
 example)
 let g:hl_matchit_hl_groupname = 'Title'
+
+						*:g:hl_matchit_speed_level*
+you can set speed level because, sometimes "execute %" make a little wait.
+I decide to avoid this problem by speed level.
+
+let g:hl_matchit_speed_level = 1 " top speed, but sometimes do not highlight.
+let g:hl_matchit_speed_level = 2 " default.
+
+						*:g:hl_matchit_allow_ft_regexp*
+you can specify allow highlight filetypes.
+let g:hl_matchit_allow_ft_regexp = 'html\|vim'   " \|perl\|sh  blah..blah..
 
 ==============================================================================
 CHANGELOG					*hl_matchit-changelog*
