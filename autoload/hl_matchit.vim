@@ -17,6 +17,9 @@ function! hl_matchit#do_highlight()
        endif
     endif
 
+    exe 'match '. g:hl_matchit_hl_groupname . " ''"
+    match none
+
     let l = getline('.')
     if g:hl_matchit_speed_level <= s:SPEED_MOST_IMPORTANT
         if l =~ '[(){}]'
