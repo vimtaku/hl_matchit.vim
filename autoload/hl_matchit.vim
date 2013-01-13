@@ -34,6 +34,10 @@ function! hl_matchit#do_highlight()
         endif
     endif
 
+    if foldclosed(line('.')) != -1
+        return
+    endif
+
     let wsv = winsaveview()
     let lcs = []
     while 1
