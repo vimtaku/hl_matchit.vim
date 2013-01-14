@@ -27,8 +27,7 @@ com! HiMatch call hl_matchit#do_highlight()
 com! HiMatchOn augroup hl_matchit |exe "au!" | exe "au cursormoved * call hl_matchit#do_highlight()" |  augroup END | doautocmd hl_matchit cursormoved
 com! HiMatchOff augroup hl_matchit | exe "au!" | augroup END | match none
 
-
-if exists('g:hl_matchit_enable_on_vim_startup')
+if exists('g:hl_matchit_enable_on_vim_startup') && g:hl_matchit_enable_on_vim_startup
     HiMatchOn
 endif
 

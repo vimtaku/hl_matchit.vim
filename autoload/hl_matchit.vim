@@ -5,6 +5,7 @@ set cpo&vim
 let s:SPEED_MOST_IMPORTANT = 1
 let s:SPEED_DEFAULT = 2
 
+let s:EXCEPT_ETERNAL_LOOP_COUNT = 30
 
 function! hl_matchit#do_highlight()
     if !exists('b:match_words')
@@ -38,32 +39,60 @@ function! hl_matchit#do_highlight()
         return
     endif
 
-    let wsv = winsaveview()
-    let lcs = []
-    while 1
-        exe 'normal %'
-        let lc = {'line': line('.'), 'col': col('.')}
-        if len(lcs) > 0 && lc.line == lcs[0].line && lc.col == lcs[0].col
-            break
-        endif
-        call add(lcs, lc)
-    endwhile
+    let restore_eventignore = &eventignore
+    try
+        set ei=all
 
-    if len(lcs) > 1
-        let lcre = ''
-        call map(lcs, '"\\%" . v:val.line . "l" . "\\%" . v:val.col . "c"')
-        let lcre = join(lcs, '\|')
-        let mw = split(b:match_words, ',\|:')
-        let mw = filter(mw, 'v:val !~ "^[(){}[\\]]$"')
-        let mwre = '\%(' . join(mw, '\|') . '\)'
-        let mwre = substitute(mwre, "'", "''", 'g')
-        " final \& part of the regexp is a hack to improve html
-        exe 'match '. g:hl_matchit_hl_groupname
-            \ . ' ''.*\%(' . lcre . '\).*\&' . mwre . '\&\%(<\_[^>]\+>\|.*\)'''
-    else
-        match none
+        let wsv = winsaveview()
+        let lcs = []
+
+        let i = 0
+        while 1
+            if (i > s:EXCEPT_ETERNAL_LOOP_COUNT)
+                let lcs = []
+                break
+            endif
+            normal %
+            let lc = {'line': line('.'), 'col': col('.')}
+            if len(lcs) > 0 && lc.line == lcs[0].line && lc.col == lcs[0].col
+                break
+            endif
+            call add(lcs, lc)
+            let i = i+1
+        endwhile
+
+        "" temporary bug fix. when visual mode, Ctrl-v is not good...
+        if s:is_visualmode()
+            normal! gv
+        endif
+
+        if len(lcs) > 1
+            let lcre = ''
+            call map(lcs, '"\\%" . v:val.line . "l" . "\\%" . v:val.col . "c"')
+            let lcre = join(lcs, '\|')
+            let mw = split(b:match_words, ',\|:')
+            let mw = filter(mw, 'v:val !~ "^[(){}[\\]]$"')
+            let mwre = '\%(' . join(mw, '\|') . '\)'
+            let mwre = substitute(mwre, "'", "''", 'g')
+            " final \& part of the regexp is a hack to improve html
+            exe 'match '. g:hl_matchit_hl_groupname
+                \ . ' ''.*\%(' . lcre . '\).*\&' . mwre . '\&\%(<\_[^>]\+>\|.*\)'''
+        else
+            match none
+        endif
+        call winrestview(wsv)
+    finally
+        execute("set eventignore=" . restore_eventignore)
+    endtry
+endfun
+
+
+function! s:is_visualmode()
+    let mode = mode()
+    if (mode == 'v' || mode == 'V' || mode == 'CTRL-V')
+        return 1
     endif
-    call winrestview(wsv)
+    return 0
 endfun
 
 

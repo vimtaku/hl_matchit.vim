@@ -37,6 +37,7 @@ BACKGROUND			|hl_matchit-background|
 INTERFACE		|hl_matchit-interface|
   Commands		  |hl_matchit-commands|
   Variables		  |hl_matchit-variables|
+BUGS			|hl_matchit-bugs|
 CHANGELOG			|hl_matchit-changelog|
 
 ==============================================================================
@@ -129,8 +130,16 @@ let g:hl_matchit_speed_level = 2 " default.
 you can specify allow highlight filetypes.
 let g:hl_matchit_allow_ft_regexp = 'html\|vim'   " \|perl\|sh  blah..blah..
 
+BUGS					*hl_matchit-bugs*
+==============================================================================
+When visual mode, % is not good.
+
 ==============================================================================
 CHANGELOG					*hl_matchit-changelog*
+
+0.1.2	2013-01-14
+	- merged pull req by pekepeke.
+	- fixed bug that sometimes happend eternal loop.
 
 0.1.1	2013-01-08
 	- fixed bug. > https://github.com/vimtaku/hl_matchit.vim/issues/1
