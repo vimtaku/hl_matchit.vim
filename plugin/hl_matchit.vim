@@ -16,16 +16,20 @@ endif
 if !exists('g:hl_matchit_speed_level')
   let g:hl_matchit_speed_level = s:SPEED_DEFAULT
 endif
+if !exists('g:hl_matchit_allow_ft')
+  let g:hl_matchit_allow_ft = ''
+endif
+
 if !exists('g:hl_matchit_allow_ft_regexp')
-  let g:hl_matchit_allow_ft_regexp = ''
+  echoerr 'hl_matchit: g:hl_matchit_allow_ft_regexp is removed. use g:hl_matchit_allow_ft'
 endif
 
 
 
-
 com! HiMatch call hl_matchit#do_highlight()
-com! HiMatchOn augroup hl_matchit |exe "au!" | exe "au cursormoved * call hl_matchit#do_highlight()" |  augroup END | doautocmd hl_matchit cursormoved
-com! HiMatchOff augroup hl_matchit | exe "au!" | augroup END | match none
+com! NoHiMatch call hl_matchit#hide()
+com! HiMatchOn call hl_matchit#enable()
+com! HiMatchOff call hl_matchit#disable()
 
 if exists('g:hl_matchit_enable_on_vim_startup') && g:hl_matchit_enable_on_vim_startup
     HiMatchOn
