@@ -123,6 +123,11 @@ you can set higlight group name.
 example)
 let g:hl_matchit_hl_groupname = 'Title'
 
+						*:g:hl_matchit_hl_priority*
+you can set higlight priority.
+example)
+let g:hl_matchit_hl_priority = 10
+
 						*:g:hl_matchit_speed_level*
 you can set speed level because, sometimes "execute %" make a little wait.
 I decide to avoid this problem by speed level.

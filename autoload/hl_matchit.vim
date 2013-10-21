@@ -42,8 +42,10 @@ function! hl_matchit#disable_buffer()
 endfunction
 
 function! hl_matchit#hide()
-  exe 'match '. g:hl_matchit_hl_groupname . " ''"
-  match none
+  if exists('b:hl_matchit_current_match_id')
+    call matchdelete(b:hl_matchit_current_match_id)
+    unlet b:hl_matchit_current_match_id
+  endif
 endfunction
 
 function! hl_matchit#do_highlight()
@@ -107,10 +109,9 @@ function! hl_matchit#do_highlight()
             let mwre = '\%(' . join(mw, '\|') . '\)'
             let mwre = substitute(mwre, "'", "''", 'g')
             " final \& part of the regexp is a hack to improve html
-            exe 'match '. g:hl_matchit_hl_groupname
-                \ . ' ''.*\%(' . lcre . '\).*\&' . mwre . '\&\%(<\_[^>]\+>\|.*\)'''
-        else
-            match none
+            let pattern = '.*\%(' . lcre . '\).*\&' . mwre . '\&\%(<\_[^>]\+>\|.*\)'
+            let b:hl_matchit_current_match_id =
+                  \ matchadd(g:hl_matchit_hl_groupname, pattern, g:hl_matchit_hl_priority)
         endif
         call winrestview(wsv)
     finally

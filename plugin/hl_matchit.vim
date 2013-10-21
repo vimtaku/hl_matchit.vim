@@ -13,6 +13,9 @@ let s:SPEED_DEFAULT = 2
 if !exists('g:hl_matchit_hl_groupname')
   let g:hl_matchit_hl_groupname = 'cursorline'
 endif
+if !exists('g:hl_matchit_hl_priority')
+  let g:hl_matchit_hl_priority = 0
+endif
 if !exists('g:hl_matchit_speed_level')
   let g:hl_matchit_speed_level = s:SPEED_DEFAULT
 endif
