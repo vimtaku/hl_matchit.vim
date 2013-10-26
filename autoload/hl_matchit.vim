@@ -38,7 +38,7 @@ function! hl_matchit#disable_buffer()
   augroup hl_matchit
     au! CursorMoved <buffer>
   augroup END
-  match none
+  call hl_matchit#hide()
 endfunction
 
 function! hl_matchit#hide()
