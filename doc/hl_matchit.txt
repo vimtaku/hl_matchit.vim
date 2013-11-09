@@ -1,7 +1,6 @@
-" vim:set fen fdm=marker:
 *hl_matchit.txt*  Vim plugin to highlight matchit.vim.
 
-Version: 0.1.0
+Version: 0.1.2
 Author : vimtaku <vimtaku@gmail.com>
 License :
 {{{
@@ -32,13 +31,13 @@ For more information, please refer to <http://unlicense.org/>
 }}}
 
 ==============================================================================
-INTRODUCTION			|hl_matchit-introduction|
-BACKGROUND			|hl_matchit-background|
+INTRODUCTION		|hl_matchit-introduction|
+BACKGROUND		|hl_matchit-background|
 INTERFACE		|hl_matchit-interface|
   Commands		  |hl_matchit-commands|
   Variables		  |hl_matchit-variables|
 BUGS			|hl_matchit-bugs|
-CHANGELOG			|hl_matchit-changelog|
+CHANGELOG		|hl_matchit-changelog|
 
 ==============================================================================
 INTRODUCTION					*hl_matchit-introduction*
@@ -48,20 +47,21 @@ Maybe you have to load matchit.vim plugin than this plugin is loaded.
 
 
 here is vimrc examples.
+>
+	"" If this variable is set, augroup is defined, and start highlighting.
+	let g:hl_matchit_enable_on_vim_startup = 1
 
-"" If this variable is set, augroup is defined, and start highlighting.
-let g:hl_matchit_enable_on_vim_startup = 1
+	"" you can specify highlight group. see :highlight
+	let g:hl_matchit_hl_groupname = 'Search'
 
-"" you can specify highlight group. see :highlight
-let g:hl_matchit_hl_groupname = 'Search'
+	"" I recomend  g:hl_matchit_speed_level = 1 because highlight is
+	"" just an addition.
+	"" If 1 is set, sometimes do not highlight.
+	let g:hl_matchit_speed_level = 1 " or 2
 
-"" I recomend  g:hl_matchit_speed_level = 1 because highlight is just an
-"" addition.
-"" If 1 is set, sometimes do not highlight.
-let g:hl_matchit_speed_level = 1 " or 2
-
-"" you can specify use hl_matchit filetype.
-let g:hl_matchit_allow_ft = 'html,vim,sh' " blah..blah..
+	"" you can specify use hl_matchit filetype.
+	let g:hl_matchit_allow_ft = 'html,vim,sh' " blah..blah..
+<
 
 ==============================================================================
 BACKGROUND					*hl_matchit-background*
@@ -90,7 +90,8 @@ AS LICENSE:
 ==============================================================================
 INTERFACE					*hl_matchit-interface*
 
-COMMAND					*hl_matchit-command*
+------------------------------------------------------------------------------
+COMMAND						*hl_matchit-command*
 
 						*:HiMatch*
 :HiMatch
@@ -108,6 +109,7 @@ COMMAND					*hl_matchit-command*
 :HiMatchOff
 	Switch off do highlight matchit autocomand.
 
+------------------------------------------------------------------------------
 VARIABLES					*hl_matchit-variables*
 
 						*:g:loaded_hl_matchit*
@@ -115,26 +117,26 @@ loaded variable.
 
 						*:g:hl_matchit_enable_on_vim_startup*
 If this variable is set, augroup is defined, and start highlighting.
-example)
-let g:hl_matchit_enable_on_vim_startup = 1
-
+>
+	let g:hl_matchit_enable_on_vim_startup = 1
+<
 						*:g:hl_matchit_hl_groupname*
 you can set higlight group name.
-example)
-let g:hl_matchit_hl_groupname = 'Title'
-
+>
+	let g:hl_matchit_hl_groupname = 'Title'
+<
 						*:g:hl_matchit_hl_priority*
 you can set higlight priority.
-example)
-let g:hl_matchit_hl_priority = 10
-
+>
+	let g:hl_matchit_hl_priority = 10
+<
 						*:g:hl_matchit_speed_level*
 you can set speed level because, sometimes "execute %" make a little wait.
 I decide to avoid this problem by speed level.
-
-let g:hl_matchit_speed_level = 1 " top speed, but sometimes do not highlight.
-let g:hl_matchit_speed_level = 2 " default.
-
+>
+	let g:hl_matchit_speed_level = 1 " top speed, but sometimes do not highlight.
+	let g:hl_matchit_speed_level = 2 " default.
+<
 						*:g:hl_matchit_cursor_wait*
 Stop highlighting, if cursor moving interval less than this value.
 >
@@ -142,10 +144,12 @@ Stop highlighting, if cursor moving interval less than this value.
 <
 						*:g:hl_matchit_allow_ft*
 you can specify allow highlight filetypes.
-let g:hl_matchit_allow_ft = 'html,vim'   " ,perl,sh  blah..blah..
+>
+	let g:hl_matchit_allow_ft = 'html,vim'   " ,perl,sh  blah..blah..
+<
 
-BUGS					*hl_matchit-bugs*
 ==============================================================================
+BUGS						*hl_matchit-bugs*
 When visual mode, % is not good.
 
 ==============================================================================
@@ -162,4 +166,4 @@ CHANGELOG					*hl_matchit-changelog*
 	- Initial version.
 
 ==============================================================================
-vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl:fen:fdm=marker:
