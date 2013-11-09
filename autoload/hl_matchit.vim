@@ -7,6 +7,8 @@ let s:SPEED_DEFAULT = 2
 
 let s:EXCEPT_ETERNAL_LOOP_COUNT = 30
 
+let s:last_cursor_moved = reltime()
+
 function! hl_matchit#enable()
   let ft = (exists('g:hl_matchit_allow_ft') && '' != g:hl_matchit_allow_ft) ?
         \ g:hl_matchit_allow_ft : '*'
@@ -27,9 +29,13 @@ function! hl_matchit#disable()
 endfunction
 
 function! hl_matchit#enable_buffer()
+  call hl_matchit#disable_buffer()
   augroup hl_matchit
-    au! CursorMoved <buffer>
-    au CursorMoved <buffer> call hl_matchit#do_highlight()
+    if 0 < g:hl_matchit_cursor_wait
+      au CursorMoved,CursorHold <buffer> call hl_matchit#do_highlight_lazy()
+    else
+      au CursorMoved <buffer> call hl_matchit#do_highlight()
+    endif
   augroup END
   call hl_matchit#do_highlight()
 endfunction
@@ -37,6 +43,7 @@ endfunction
 function! hl_matchit#disable_buffer()
   augroup hl_matchit
     au! CursorMoved <buffer>
+    au! CursorHold <buffer>
   augroup END
   call hl_matchit#hide()
 endfunction
@@ -46,6 +53,15 @@ function! hl_matchit#hide()
     call matchdelete(b:hl_matchit_current_match_id)
     unlet b:hl_matchit_current_match_id
   endif
+endfunction
+
+function! hl_matchit#do_highlight_lazy()
+  let dt = str2float(reltimestr(reltime(s:last_cursor_moved)))
+  echo "hl_matchit: ".string(dt)
+  if g:hl_matchit_cursor_wait < dt
+    call hl_matchit#do_highlight()
+  endif
+  let s:last_cursor_moved = reltime()
 endfunction
 
 function! hl_matchit#do_highlight()

@@ -19,6 +19,9 @@ endif
 if !exists('g:hl_matchit_speed_level')
   let g:hl_matchit_speed_level = s:SPEED_DEFAULT
 endif
+if !exists('g:hl_matchit_cursor_wait')
+  let g:hl_matchit_cursor_wait = 0.200
+endif
 if !exists('g:hl_matchit_allow_ft')
   let g:hl_matchit_allow_ft = ''
 endif

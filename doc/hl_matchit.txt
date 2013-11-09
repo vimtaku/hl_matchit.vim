@@ -135,6 +135,11 @@ I decide to avoid this problem by speed level.
 let g:hl_matchit_speed_level = 1 " top speed, but sometimes do not highlight.
 let g:hl_matchit_speed_level = 2 " default.
 
+						*:g:hl_matchit_cursor_wait*
+Stop highlighting, if cursor moving interval less than this value.
+>
+	let g:hl_matchit_cursor_wait = 0.200 " default.
+<
 						*:g:hl_matchit_allow_ft*
 you can specify allow highlight filetypes.
 let g:hl_matchit_allow_ft = 'html,vim'   " ,perl,sh  blah..blah..
