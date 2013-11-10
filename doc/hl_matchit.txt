@@ -61,7 +61,7 @@ let g:hl_matchit_hl_groupname = 'Search'
 let g:hl_matchit_speed_level = 1 " or 2
 
 "" you can specify use hl_matchit filetype.
-let g:hl_matchit_allow_ft_regexp = 'html\|vim\|sh' " blah..blah..
+let g:hl_matchit_allow_ft = 'html,vim,sh' " blah..blah..
 
 ==============================================================================
 BACKGROUND					*hl_matchit-background*
@@ -96,6 +96,10 @@ COMMAND					*hl_matchit-command*
 :HiMatch
 	do highlight match once.
 
+						*:NoHiMatch*
+:NoHiMatch
+	hide highlight.
+
 						*:HiMatchOn*
 :HiMatchOn
 	Switch on do highlight matchit autocomand.
@@ -119,6 +123,11 @@ you can set higlight group name.
 example)
 let g:hl_matchit_hl_groupname = 'Title'
 
+						*:g:hl_matchit_hl_priority*
+you can set higlight priority.
+example)
+let g:hl_matchit_hl_priority = 10
+
 						*:g:hl_matchit_speed_level*
 you can set speed level because, sometimes "execute %" make a little wait.
 I decide to avoid this problem by speed level.
@@ -126,9 +135,14 @@ I decide to avoid this problem by speed level.
 let g:hl_matchit_speed_level = 1 " top speed, but sometimes do not highlight.
 let g:hl_matchit_speed_level = 2 " default.
 
-						*:g:hl_matchit_allow_ft_regexp*
+						*:g:hl_matchit_cursor_wait*
+Stop highlighting, if cursor moving interval less than this value.
+>
+	let g:hl_matchit_cursor_wait = 0.200 " default.
+<
+						*:g:hl_matchit_allow_ft*
 you can specify allow highlight filetypes.
-let g:hl_matchit_allow_ft_regexp = 'html\|vim'   " \|perl\|sh  blah..blah..
+let g:hl_matchit_allow_ft = 'html,vim'   " ,perl,sh  blah..blah..
 
 BUGS					*hl_matchit-bugs*
 ==============================================================================

@@ -7,19 +7,69 @@ let s:SPEED_DEFAULT = 2
 
 let s:EXCEPT_ETERNAL_LOOP_COUNT = 30
 
+let s:last_cursor_moved = reltime()
+
+function! hl_matchit#enable()
+  let ft = (exists('g:hl_matchit_allow_ft') && '' != g:hl_matchit_allow_ft) ?
+        \ g:hl_matchit_allow_ft : '*'
+  augroup hl_matchit
+    au!
+    exec 'au FileType' ft 'call hl_matchit#enable_buffer()'
+  augroup END
+  doautoall hl_matchit FileType
+endfunction
+
+function! hl_matchit#disable()
+  augroup hl_matchit
+    au!
+    au User * call hl_matchit#hide()
+  augroup END
+  doautoall hl_matchit User
+  au! hl_matchit User *
+endfunction
+
+function! hl_matchit#enable_buffer()
+  call hl_matchit#disable_buffer()
+  augroup hl_matchit
+    if 0 < g:hl_matchit_cursor_wait
+      au CursorMoved,CursorHold <buffer> call hl_matchit#do_highlight_lazy()
+    else
+      au CursorMoved <buffer> call hl_matchit#do_highlight()
+    endif
+  augroup END
+  call hl_matchit#do_highlight()
+endfunction
+
+function! hl_matchit#disable_buffer()
+  augroup hl_matchit
+    au! CursorMoved <buffer>
+    au! CursorHold <buffer>
+  augroup END
+  call hl_matchit#hide()
+endfunction
+
+function! hl_matchit#hide()
+  if exists('b:hl_matchit_current_match_id')
+    call matchdelete(b:hl_matchit_current_match_id)
+    unlet b:hl_matchit_current_match_id
+  endif
+endfunction
+
+function! hl_matchit#do_highlight_lazy()
+  let dt = str2float(reltimestr(reltime(s:last_cursor_moved)))
+  echo "hl_matchit: ".string(dt)
+  if g:hl_matchit_cursor_wait < dt
+    call hl_matchit#do_highlight()
+  endif
+  let s:last_cursor_moved = reltime()
+endfunction
+
 function! hl_matchit#do_highlight()
     if !exists('b:match_words')
         return
     endif
 
-    if g:hl_matchit_allow_ft_regexp != ''
-       if &filetype !~ g:hl_matchit_allow_ft_regexp
-           return
-       endif
-    endif
-
-    exe 'match '. g:hl_matchit_hl_groupname . " ''"
-    match none
+    call hl_matchit#hide()
 
     let l = getline('.')
     if g:hl_matchit_speed_level <= s:SPEED_MOST_IMPORTANT
@@ -75,10 +125,9 @@ function! hl_matchit#do_highlight()
             let mwre = '\%(' . join(mw, '\|') . '\)'
             let mwre = substitute(mwre, "'", "''", 'g')
             " final \& part of the regexp is a hack to improve html
-            exe 'match '. g:hl_matchit_hl_groupname
-                \ . ' ''.*\%(' . lcre . '\).*\&' . mwre . '\&\%(<\_[^>]\+>\|.*\)'''
-        else
-            match none
+            let pattern = '.*\%(' . lcre . '\).*\&' . mwre . '\&\%(<\_[^>]\+>\|.*\)'
+            let b:hl_matchit_current_match_id =
+                  \ matchadd(g:hl_matchit_hl_groupname, pattern, g:hl_matchit_hl_priority)
         endif
         call winrestview(wsv)
     finally
