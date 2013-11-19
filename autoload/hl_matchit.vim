@@ -57,7 +57,6 @@ endfunction
 
 function! hl_matchit#do_highlight_lazy()
   let dt = str2float(reltimestr(reltime(s:last_cursor_moved)))
-  echo "hl_matchit: ".string(dt)
   if g:hl_matchit_cursor_wait < dt
     call hl_matchit#do_highlight()
   endif
