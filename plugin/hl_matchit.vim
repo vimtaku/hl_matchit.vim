@@ -26,7 +26,7 @@ if !exists('g:hl_matchit_allow_ft')
   let g:hl_matchit_allow_ft = ''
 endif
 
-if !exists('g:hl_matchit_allow_ft_regexp')
+if exists('g:hl_matchit_allow_ft_regexp')
   echoerr 'hl_matchit: g:hl_matchit_allow_ft_regexp is removed. use g:hl_matchit_allow_ft'
 endif
 
