@@ -155,6 +155,9 @@ When visual mode, % is not good.
 ==============================================================================
 CHANGELOG					*hl_matchit-changelog*
 
+0.1.3	2014-01-11
+	- fixed bug that sometimes erorr happend.
+
 0.1.2	2013-01-14
 	- merged pull req by pekepeke.
 	- fixed bug that sometimes happend eternal loop.
