@@ -52,6 +52,7 @@ function! hl_matchit#hide()
   if exists('b:hl_matchit_current_match_id')
     try
         call matchdelete(b:hl_matchit_current_match_id)
+    catch
     endtry
     unlet b:hl_matchit_current_match_id
   endif
