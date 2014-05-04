@@ -124,10 +124,13 @@ function! hl_matchit#do_highlight()
             let lcre = join(lcs, '\|')
             let mw = split(b:match_words, ',\|:')
             let mw = filter(mw, 'v:val !~ "^[(){}[\\]]$"')
+            if &filetype =~# 'html'
+              " hack to improve html
+              call insert(mw,  '<\_[^>]\+>')
+            endif
             let mwre = '\%(' . join(mw, '\|') . '\)'
             let mwre = substitute(mwre, "'", "''", 'g')
-            " final \& part of the regexp is a hack to improve html
-            let pattern = '.*\%(' . lcre . '\).*\&' . mwre . '\&\%(<\_[^>]\+>\|.*\)'
+            let pattern = '.*\%(' . lcre . '\).*\&' . mwre
             let b:hl_matchit_current_match_id =
                   \ matchadd(g:hl_matchit_hl_groupname, pattern, g:hl_matchit_hl_priority)
         endif
